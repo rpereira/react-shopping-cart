@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 
 import App from './App';
 import './index.css';
@@ -9,7 +10,7 @@ import './index.css';
 import rootReducer from './reducers';
 import { getAllProducts } from './actions/products';
 
-const middleware = [];
+const middleware = [thunk];
 if (process.env.NODE_ENV === 'production') {
   // eslint-disable-next-line global-require
   const createLogger = require('redux-logger').createLogger;
