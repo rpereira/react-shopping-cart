@@ -39,6 +39,10 @@ export default combineReducers({
   allIds,
 });
 
-export function getProducts(state) {
-  return state.products;
+export function getProduct(state, id) {
+  return state.byId[id];
+}
+
+export function getAllProducts(state) {
+  return state.allIds.map(id => getProduct(state, id));
 }
