@@ -1,15 +1,44 @@
-const initialState = {
-  products: [],
-};
+import { combineReducers } from 'redux';
 
-function products(state = initialState, action) {
+function byId(state = {}, action) {
+  if (action.type === 'RECEIVE_PRODUCTS') {
+    return {
+      ...state,
+      ...action.payload.products.reduce((obj, product) => {
+        // eslint-disable-next-line no-param-reassign
+        obj[product.id] = product;
+        return obj;
+      }, {}),
+    };
+  }
+
+  const { productId } = action;
+  if (productId) {
+    return {
+      ...state,
+      [productId]: state[productId],
+    };
+  }
+  return state;
+}
+
+function allIds(state = [], action) {
   switch (action.type) {
-    case 'RECEIVE_PRODUCTS':
-      return action.payload.products;
+    case 'RECEIVE_PRODUCTS': {
+      const productIds = xs => xs.map(x => x.id);
+      return productIds(action.payload.products);
+    }
 
     default:
       return state;
   }
 }
 
-export default products;
+export default combineReducers({
+  byId,
+  allIds,
+});
+
+export function getProducts(state) {
+  return state.products;
+}

@@ -9,8 +9,21 @@ describe('reducers', () => {
         { id: 2, title: 'product #2' },
       ];
       const action = receiveProducts(stock);
+      const normalizedState = {
+        byId: {
+          1: {
+            id: 1,
+            title: 'product #1'
+          },
+          2: {
+            id: 2,
+            title: 'product #2'
+          }
+        },
+        allIds: [1, 2]
+      };
 
-      expect(products({}, action)).toEqual(stock);
+      expect(products({}, action)).toEqual(normalizedState);
     });
   });
 });
